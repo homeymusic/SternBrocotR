@@ -50,7 +50,7 @@ DataFrame stern_brocot_cpp(const double x,
   int right_num = floor(x) + 1, right_den = 1;
 
   approximation = (double) mediant_num / mediant_den;
-  const int insane = 1000;
+  const int insane = 1000000;
 
   while ((approximation < valid_min) || (valid_max < approximation)) {
     double x0 = 2 * x - approximation;

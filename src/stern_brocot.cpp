@@ -2,7 +2,7 @@
 
 using namespace Rcpp;
 
-inline double round_to_precision(double value, int precision = 12) {
+inline double round_to_precision(double value, int precision = 15) {
   double scale = std::pow(10.0, precision);
   return std::round(value * scale) / scale;
 }

@@ -3,7 +3,7 @@
 #' @param x A real number to approximate as a fraction.
 #' @param uncertainty Either a single numeric value representing symmetrical uncertainty
 #'        or a vector of two values representing lower and upper uncertainty bounds.
-#' @return A dataframe with an integer, `num` (numerator) and a natural numeber
+#' @return A dataframe with an integer, `num` (numerator) and a natural number
 #'         greater than 0, `den` (denominator), representing the fraction
 #'         approximation of the input.
 #' @examples
@@ -36,20 +36,10 @@ stern_brocot <- function(x, uncertainty) {
     stop("Uncertainty values must be non-negative.")
   }
 
-  result = stern_brocot_cpp(
+  stern_brocot_cpp(
     x,
     valid_min = x - lower_uncertainty,
     valid_max = x + upper_uncertainty
   )
-
-  if (!is.integer(result$num)) {
-    stop("The resulting numerator must be an integer.")
-  }
-
-  if (!is.integer(result$den) || result$den < 1) {
-    stop("The resulting denominator must be a natural number greater than zero.")
-  }
-
-  result
 
 }

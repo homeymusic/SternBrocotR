@@ -42,6 +42,7 @@ print(result)
 
 ### Output Details
 The result includes:
+- `x`: The input number to approximate as a fraction
 - `num`: Numerator of the fraction
 - `den`: Denominator of the fraction
 - `approximation`: The decimal approximation (`num / den`)
@@ -72,6 +73,15 @@ citation("SternBrocotR")
 - Approximate real numbers with configurable uncertainty bounds.
 - Compute fractional approximations with metadata like depth, error, and binary path representation.
 - Efficient implementation using the Stern-Brocot tree algorithm.
+
+---
+
+## References
+
+This package implements concepts and methods inspired by the following papers:
+
+1. Forišek, M. (2007). Approximating rational numbers by fractions. In *International Conference on Fun with Algorithms* (pp. 156-165). Springer Berlin Heidelberg. [DOI](https://doi.org/10.1007/978-3-540-72914-3_16)
+2. Stolzenburg, F. (2015). Harmony perception by periodicity detection. *Journal of Mathematics and Music, 9*(3), 215-238. [DOI](https://doi.org/10.1080/17459737.2015.1042187)
 
 ---
 

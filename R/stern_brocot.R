@@ -4,6 +4,13 @@
 #' using the Stern-Brocot tree. It supports specifying a tolerance (uncertainty) to determine
 #' how close the approximation should be to the real number.
 #'
+#' The method is inspired by the algorithms described in:
+#'
+#' - Forišek, M. (2007). Approximating rational numbers by fractions. In International
+#'   Conference on Fun with Algorithms (pp. 156-165). Springer Berlin Heidelberg.
+#' - Stolzenburg, F. (2015). Harmony perception by periodicity detection. Journal of
+#'   Mathematics and Music, 9(3), 215-238.
+#'
 #' @param x A single numeric value to approximate as a fraction. Must be a finite value.
 #' @param uncertainty Either:
 #'   - A single positive numeric value representing symmetrical uncertainty bounds (i.e., ±uncertainty), or

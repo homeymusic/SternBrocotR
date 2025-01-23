@@ -27,6 +27,10 @@ inline int as_integer_cpp(const std::vector<int>& bits) {
  //'
  //' Approximates a floating-point number to arbitrary uncertainty.
  //'
+ //' This implementation is based on the Stern-Brocot tree algorithm as described in:
+ //' - Forišek M. Approximating rational numbers by fractions. In International Conference on Fun with Algorithms 2007 Jun 3 (pp. 156-165). Berlin, Heidelberg: Springer Berlin Heidelberg.
+ //' - Stolzenburg F. Harmony perception by periodicity detection. Journal of Mathematics and Music. 2015 Sep 2;9(3):215-38.
+ //'
  //' @param x Number to convert to rational fraction
  //' @param valid_min Lower bound
  //' @param valid_max Upper bound

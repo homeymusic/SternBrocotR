@@ -36,6 +36,15 @@ This function approximates a real number as a rational fraction (numerator and d
 using the Stern-Brocot tree. It supports specifying a tolerance (uncertainty) to determine
 how close the approximation should be to the real number.
 }
+\details{
+The method is inspired by the algorithms described in:
+\itemize{
+\item Forišek, M. (2007). Approximating rational numbers by fractions. In International
+Conference on Fun with Algorithms (pp. 156-165). Springer Berlin Heidelberg.
+\item Stolzenburg, F. (2015). Harmony perception by periodicity detection. Journal of
+Mathematics and Music, 9(3), 215-238.
+}
+}
 \examples{
 # Approximation with symmetrical uncertainty
 stern_brocot(0.49, uncertainty = 0.03)  # Returns approximately 1/2

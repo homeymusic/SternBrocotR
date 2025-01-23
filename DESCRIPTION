@@ -8,6 +8,7 @@ Authors@R: person(
     "McAuliff Mulloy", 
     email = "brian@homeymusic.com", 
     role = c("aut", "cre"))
+Maintainer: Brian McAuliff Mulloy <brian@homeymusic.com>
 Description: Provides tools for approximating real numbers as rational fractions 
     using the Stern-Brocot tree. Includes functions for precise approximations 
     with configurable uncertainty bounds and metadata about the approximation process.

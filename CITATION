@@ -1,16 +1,14 @@
-# CITATION file for the SternBrocot package
+# CITATION file for the SternBrocotR package
 
-citHeader("To cite the SternBrocot package in publications, use:")
+citHeader("To cite the SternBrocotR package in publications, use:")
 
 citation <- bibentry(
   bibtype = "Manual",
-  title = "SternBrocot: Approximation of Real Numbers as Rational Fractions Using the Stern-Brocot Tree",
+  title = "SternBrocotR: Approximation of Real Numbers as Rational Fractions Using the Stern-Brocot Tree",
   author = person("Brian McAuliff", "Mulloy"),
   year = "2025",
   note = "R package version 1.0.0",
   url = "https://github.com/homeymusic/SternBrocotR"
 )
 
-citFooter("This package was inspired by methods from the following papers:
-1. Forisek M. Approximating rational numbers by fractions. In International Conference on Fun with Algorithms 2007 Jun 3 (pp. 156-165). Berlin, Heidelberg: Springer Berlin Heidelberg.
-2. Stolzenburg F. Harmony perception by periodicity detection. Journal of Mathematics and Music. 2015 Sep 2;9(3):215-38.")
+citFooter("This package was inspired by methods from Forisek (2007) and Stolzenburg (2015).")

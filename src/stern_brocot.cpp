@@ -23,31 +23,6 @@ inline int as_integer_cpp(const std::vector<int>& bits) {
   return result;
 }
 
-// Helper function to create the DataFrame with all columns and calculated metrics
-DataFrame create_stern_brocot_df(
-    const double x,
-    const int num,
-    const int den,
-    const double approximation,
-    const double valid_min,
-    const double valid_max,
-    const std::vector<int>& path
-) {
-
-  return DataFrame::create(
-    _["x"] = x,
-    _["num"] = num,
-    _["den"] = den,
-    _["approximation"] = approximation,
-    _["error"] = round_to_precision(approximation - x),
-    _["valid_min"] = valid_min,
-    _["valid_max"] = valid_max,
-    _["depth"] = path.size(),  // Depth corresponds to the length of the path
-    _["path"] = as_string_cpp(path),  // Convert path vector to string
-    _["path_id"] = as_integer_cpp(path)
-  );
-}
-
  //' stern_brocot_cpp
  //'
  //' Approximates a floating-point number to arbitrary uncertainty.
@@ -113,9 +88,17 @@ DataFrame stern_brocot_cpp(const double x,
   if (cycles != path.size() - 1) {
     stop("STOP: cycles value does not match the depth. cycles: " + std::to_string(cycles) + ", path size: " + std::to_string(path.size()));
   }
-  // Return the DataFrame with the estimated values and metrics calculated
-  return create_stern_brocot_df(
-    x, mediant_num, mediant_den, approximation,
-    valid_min, valid_max, path
+
+  return DataFrame::create(
+    _["x"] = x,
+    _["num"] = mediant_num,
+    _["den"] = mediant_den,
+    _["approximation"] = approximation,
+    _["error"] = round_to_precision(approximation - x),
+    _["valid_min"] = valid_min,
+    _["valid_max"] = valid_max,
+    _["depth"] = path.size(),
+    _["path"] = as_string_cpp(path),
+    _["path_id"] = as_integer_cpp(path)
   );
 }

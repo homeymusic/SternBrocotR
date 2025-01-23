@@ -10,22 +10,26 @@ stern_brocot(x, uncertainty)
 \item{x}{A single numeric value to approximate as a fraction. Must be a finite value.}
 
 \item{uncertainty}{Either:
-- A single positive numeric value representing symmetrical uncertainty bounds (i.e., ±uncertainty), or
-- A vector of two positive numeric values, where the first element is the lower uncertainty and the second
-  is the upper uncertainty, defining the range `[x - lower, x + upper]`.}
+\itemize{
+\item A single positive numeric value representing symmetrical uncertainty bounds (i.e., ±uncertainty), or
+\item A vector of two positive numeric values, where the first element is the lower uncertainty and the second
+is the upper uncertainty, defining the range \verb{[x - lower, x + upper]}.
+}}
 }
 \value{
 A data frame with the following columns:
-  - `x`: The original value of `x`.
-  - `num`: The numerator of the approximated fraction (an integer).
-  - `den`: The denominator of the approximated fraction (a natural number > 0).
-  - `approximation`: The value of the fraction `num / den`.
-  - `error`: The difference between the approximation and the original value of `x`.
-  - `valid_min`: The lower bound of the uncertainty range.
-  - `valid_max`: The upper bound of the uncertainty range.
-  - `depth`: The depth of the Stern-Brocot tree traversal (number of steps taken).
-  - `path`: The path taken in the Stern-Brocot tree as a binary string.
-  - `path_id`: The binary path represented as an integer.
+\itemize{
+\item \code{x}: The original value of \code{x}.
+\item \code{num}: The numerator of the approximated fraction (an integer).
+\item \code{den}: The denominator of the approximated fraction (a natural number > 0).
+\item \code{approximation}: The value of the fraction \code{num / den}.
+\item \code{error}: The difference between the approximation and the original value of \code{x}.
+\item \code{valid_min}: The lower bound of the uncertainty range.
+\item \code{valid_max}: The upper bound of the uncertainty range.
+\item \code{depth}: The depth of the Stern-Brocot tree traversal (number of steps taken).
+\item \code{path}: The path taken in the Stern-Brocot tree as a binary string.
+\item \code{path_id}: The binary path represented as an integer.
+}
 }
 \description{
 This function approximates a real number as a rational fraction (numerator and denominator)

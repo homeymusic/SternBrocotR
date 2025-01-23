@@ -1,16 +1,24 @@
 Package: SternBrocot
 Type: Package
-Title: Concise Summary of What the Package Does
-Version: 1.0
+Title: Approximation of Real Numbers as Rational Fractions Using the Stern-Brocot Tree
+Version: 1.0.0
 Date: 2025-01-22
-Authors@R: person("Your", "Name", role = c("aut", "cre"), email =
-         "your@email.com")
-Description: More about what it does (maybe more than one line).
-License: GPL (>= 2)
-Imports: Rcpp (>= 1.0.14)
-LinkingTo: Rcpp
+Authors@R: person(
+    "Brian",
+    "McAuliff Mulloy", 
+    email = "brian@homeymusic.com", 
+    role = c("aut", "cre"))
+Description: Provides tools for approximating real numbers as rational fractions 
+    using the Stern-Brocot tree. Includes functions for precise approximations 
+    with configurable uncertainty bounds and metadata about the approximation process.
+License: MIT + file LICENSE
+Imports: 
+    Rcpp (>= 1.0.14)
+LinkingTo: 
+    Rcpp
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 Encoding: UTF-8

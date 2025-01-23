@@ -10,19 +10,22 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// rcpp_hello_world
-List rcpp_hello_world();
-RcppExport SEXP _SternBrocot_rcpp_hello_world() {
+// stern_brocot_cpp
+DataFrame stern_brocot_cpp(const double x, const double valid_min, const double valid_max);
+RcppExport SEXP _SternBrocot_stern_brocot_cpp(SEXP xSEXP, SEXP valid_minSEXP, SEXP valid_maxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpp_hello_world());
+    Rcpp::traits::input_parameter< const double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const double >::type valid_min(valid_minSEXP);
+    Rcpp::traits::input_parameter< const double >::type valid_max(valid_maxSEXP);
+    rcpp_result_gen = Rcpp::wrap(stern_brocot_cpp(x, valid_min, valid_max));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_SternBrocot_rcpp_hello_world", (DL_FUNC) &_SternBrocot_rcpp_hello_world, 0},
+    {"_SternBrocot_stern_brocot_cpp", (DL_FUNC) &_SternBrocot_stern_brocot_cpp, 3},
     {NULL, NULL, 0}
 };
 

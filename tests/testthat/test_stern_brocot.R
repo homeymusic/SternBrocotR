@@ -10,6 +10,19 @@ test_that("close to 0.5 returns 1/2 with symmetrical uncertainty", {
   expect_equal(result$path, '10')
   expect_equal(result$path_id, 2)
   expect_equal(result$depth, 2)
+
+  real = -real
+  uncertainty = 0.03
+  result <- stern_brocot(
+    x = real,
+    uncertainty = uncertainty
+  )
+  expect_equal(result$num, -1)
+  expect_equal(result$den, 2)
+  expect_equal(result$path, '11')
+  expect_equal(result$path_id, 3)
+  expect_equal(result$depth, 2)
+
 })
 test_that("close to 0.5 returns 1/2 with asymmetrical uncertainty", {
   real = 0.49
@@ -63,6 +76,16 @@ test_that("x = 1 returns 1/1", {
   expect_equal(result$num, 1)
   expect_equal(result$den, 1)
 })
+test_that("x = -1 returns -1/1", {
+  real = -1
+  uncertainty = 0.01
+  result <- stern_brocot(
+    x = real,
+    uncertainty = uncertainty
+  )
+  expect_equal(result$num, -1)
+  expect_equal(result$den, 1)
+})
 test_that("negative input returns a negative numerator", {
   real = -0.5
   uncertainty = 0.01
@@ -85,6 +108,12 @@ test_that("0.5 returns 1/2", {
 test_that("29 / 42 works", {
   result <- stern_brocot(29 / 42, GABOR_UNCERTAINTY ^ 2)
   expect_equal(result$num, 9)
+  expect_equal(result$den, 13)
+})
+
+test_that("-29 / 42 works", {
+  result <- stern_brocot(-29 / 42, GABOR_UNCERTAINTY ^ 2)
+  expect_equal(result$num, -9)
   expect_equal(result$den, 13)
 })
 
@@ -129,6 +158,20 @@ test_that("stern_brocot function returns correct rational approximation", {
 
   # Check if the approximation is reasonable
   approx_value <- result$num / result$den
+  expect_equal(result$num,5)
+  expect_equal(result$den,2)
+  expect_true(abs(approx_value - x) <= uncertainty)
+  expect_equal(result$approximation, approx_value)
+  expect_equal(result$error, 0)
+
+  x = -2.5
+  # Test case 1: Standard input with small uncertainty
+  result <- stern_brocot(x, uncertainty)
+
+  # Check if the approximation is reasonable
+  expect_equal(result$num,-5)
+  expect_equal(result$den,2)
+  approx_value <- result$num / result$den
   expect_true(abs(approx_value - x) <= uncertainty)
   expect_equal(result$approximation, approx_value)
   expect_equal(result$error, 0)
@@ -139,6 +182,13 @@ test_that("stern_brocot function returns correct rational approximation", {
   expect_equal(result$num, 1)
   expect_true(result$den > 900)
   expect_equal(result$x, 0.001)
+  expect_equal(result$depth, 411)
+
+  result <- stern_brocot(-0.001, uncertainty)
+  expect_equal(result$num, -1)
+  expect_true(result$den > 900)
+  expect_equal(result$x, -0.001)
+  expect_equal(result$depth, 411)
 
   # Test case 3: Large x value with moderate uncertainty
   uncertainty = 0.1

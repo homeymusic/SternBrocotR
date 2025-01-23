@@ -48,7 +48,6 @@ DataFrame stern_brocot_cpp(const double x,
   approximation = (double) mediant_num / mediant_den;
   const int insane = 1000;
 
-  // Main computation loop for Stern-Brocot
   while ((approximation < valid_min) || (valid_max < approximation)) {
     double x0 = 2 * x - approximation;
 
@@ -84,7 +83,6 @@ DataFrame stern_brocot_cpp(const double x,
 
   if (mediant_den <= 0) stop("STOP: mediant_den is less than or equal to zero");
 
-  // Ensure cycles == depth before returning
   if (cycles != path.size() - 1) {
     stop("STOP: cycles value does not match the depth. cycles: " + std::to_string(cycles) + ", path size: " + std::to_string(path.size()));
   }

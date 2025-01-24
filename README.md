@@ -21,13 +21,31 @@ $$x = \text{SB}(\sqrt{2} | 0.02, 0.01) = \frac{7}{5}$$
 
 $$x = \text{SB}(\tilde{x} | \sigma^\lt_x, \sigma^\gt_x) = \frac{p}{q}$$
 
-A common use case is when the lower and upper uncertainties have the same value:
+A common use case is the lower and upper uncertainties have the same value:
 
 ```r
-stern_brocot(sqrt(2), 0.01) # returns 17 / 12
+stern_brocot(sqrt(3), 0.1) # returns 5 / 3
 ```
 
 $$x = \text{SB}(\tilde{x} | \sigma_x) = \frac{p}{q}, \quad \sigma^\lt_x = \sigma^\gt_x$$
+
+---
+
+#### Stern-Brocot tree with path 
+
+Every unique path in the tree Stern-Brocot leads to a unique coprime fraction. 
+We can encode the path as a binary set of choices where we start with `1` for the
+`1/1` vertex followed by `0` for movement to the left and `1` for movement to the
+right. In the figure below, the encoding would be to start with `1/1` as `1` 
+followed by a right movement to `2/1` which would encode with another `1` followed 
+by a movement to the left to `3/2` which we encode with a `0` followed by a movement
+to the right to `5/3` which we encode with another `1`. So the full encoding would be:
+
+##### Path encoding for `5/3`: `1101`
+
+![The path in the Stern-Brocot tree for the square root of 3 with uncertainty of 0.1.](man/figures/stern_brocot_1101.png)
+
+---
 
 Following Graham et al. [3], we use the $\perp$ sign to indicate $p$ and $q$ are coprime.
 
@@ -38,7 +56,13 @@ the coprime rational fractions.
 
 $$\mathbb{R} \to \mathbb{Q_\perp}$$
 
+---
+
+#### Coprime rational numbers
+
 ![A schematic diagram illustrating the relationship between coprime rational fractions and other sets of numbers.](man/figures/numbers.png)
+
+---
 
 ### Metadata
 
@@ -107,6 +131,12 @@ A data frame with the following columns:
 
 ## Examples
 
+Import the `SternBrocot` package for the examples.
+
+```r
+library(SternBrocot)
+```
+
 ### Symmetrical Uncertainty
 
 A symmetrical uncertainty parameter is the most common case and is useful for 
@@ -114,8 +144,6 @@ modeling scenarios with even boundary conditions, where the acceptable range for
 approximation is the same between lower and upper bounds.
 
 ```r
-library(SternBrocot)
-
 # Approximate the square root of two with symmetrical uncertainty
 result <- stern_brocot(sqrt(2), uncertainty = 0.03)
 print(result)

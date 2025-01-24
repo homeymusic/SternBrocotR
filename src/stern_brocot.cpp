@@ -41,8 +41,14 @@ inline int as_integer_cpp(const std::vector<int>& bits) {
 DataFrame stern_brocot_cpp(const double x,
                         const double valid_min, const double valid_max) {
 
-  if (x <= 0 || valid_min <= 0 || valid_max <= 0) {
-    stop("STOP: all inputs must be greater than 0");
+  if (valid_min <= 0) {
+    stop("STOP: valid_min must be greater than 0");
+  }
+  if (x <= valid_min) {
+    stop("STOP: x must be greater than valid_min");
+  }
+  if (valid_max <= x) {
+    stop("STOP: x must be less than valid_max");
   }
 
   int cycles = 0;

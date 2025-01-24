@@ -1,3 +1,31 @@
+stern_brocot_plot <- function(path) {
+  internal_stern_brocot_plot(stern_brocot_tree(depth=nchar(path), path))
+}
+
+stern_brocot_no_path_plot <- function(depth) {
+  internal_stern_brocot_plot(stern_brocot_tree(depth=depth, path=""))
+}
+
+internal_stern_brocot_plot <- function(sb) {
+  # Ensure sb contains the necessary components
+  if (is.null(sb$depth) || is.null(sb$layout) || is.null(sb$graph)) {
+    stop("The 'sb' object must contain 'depth', 'layout', and 'graph'.")
+  }
+
+  # Plot the graph with the scaled layout and dynamic vertex size
+  plot(
+    sb$graph,
+    layout             = sb$layout,
+    vertex.size        = 20,      # Dynamic vertex size
+    vertex.label       = igraph::V(sb$graph)$fraction_str,
+    vertex.frame.color = "black",
+    vertex.color       = ifelse(igraph::V(sb$graph)$traveled, "black", "white"),
+    vertex.label.color = ifelse(igraph::V(sb$graph)$traveled, "white", "black"),
+    edge.color         = ifelse(igraph::E(sb$graph)$traveled, "black", "grey40"),
+    edge.width         = ifelse(igraph::E(sb$graph)$traveled, 3, 1)
+  )
+}
+
 stern_brocot_graph <- function(depth) {
   node_map     <- new.env(parent = emptyenv())  # fraction_str -> temp ID
   intro_level  <- new.env(parent = emptyenv())  # temp ID -> level
@@ -249,7 +277,9 @@ stern_brocot_tree <- function(depth, path) {
     graph          = path_res$graph,
     layout         = lay,
     traveled_nodes = path_res$traveled_nodes,
-    traveled_edges = path_res$traveled_edges
+    traveled_edges = path_res$traveled_edges,
+    depth          = depth,
+    path           = path
   )
 }
 

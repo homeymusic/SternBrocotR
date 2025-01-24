@@ -135,60 +135,13 @@ test_that("Path='101' visits 1/2 -> 2/3 (not 3/2)", {
 })
 
 test_that("vdiffr: Stern–Brocot depth=3 (no path)", {
-  skip_on_cran()
-  skip_if_not_installed("vdiffr")
-
-  sb <- stern_brocot_tree(depth=3, path="")
-
-  # We'll create a function that draws the plot and returns nothing:
-  draw_plot <- function() {
-    plot(
-      sb$graph,
-      layout           = sb$layout,
-      vertex.size      = 20,
-      vertex.label     = igraph::V(sb$graph)$fraction_str,
-      vertex.color     = ifelse(igraph::V(sb$graph)$traveled, "red", "lightblue"),
-      edge.color       = ifelse(igraph::E(sb$graph)$traveled, "red", "grey40"),
-      main             = "Stern-Brocot (depth=3, no path)"
-    )
-  }
-
-  # Capture the plot via recordPlot():
-  plot_capture <- function() {
-    draw_plot()
-    grDevices::recordPlot()
-  }
-
-  # expect_doppelganger wants a function that returns a ggplot or
-  # something "replayable" as a grid object. We'll give it a function
-  # that replays the recorded base plot:
-  plot_replayer <- function() replayPlot(plot_capture())
-
-  vdiffr::expect_doppelganger("SB depth=3 no path", plot_replayer)
+  vdiffr::expect_doppelganger("SB depth=3 no path", function() stern_brocot_no_path_plot(depth=3))
 })
 test_that("vdiffr: Stern–Brocot depth=3 path=101", {
-  skip_on_cran()
-  skip_if_not_installed("vdiffr")
-
-  # This path should highlight 1/1 and presumably 1/2 or 2/1.
-  sb <- stern_brocot_tree(depth=3, path="101")
-
-  draw_plot <- function() {
-    plot(
-      sb$graph,
-      layout           = sb$layout,
-      vertex.size      = 20,
-      vertex.label     = igraph::V(sb$graph)$fraction_str,
-      vertex.color     = ifelse(igraph::V(sb$graph)$traveled, "red", "lightblue"),
-      edge.color       = ifelse(igraph::E(sb$graph)$traveled, "red", "grey40"),
-      main             = "Stern-Brocot (depth=3, path='101')"
-    )
-  }
-  plot_capture <- function() {
-    draw_plot()
-    grDevices::recordPlot()
-  }
-  plot_replayer <- function() replayPlot(plot_capture())
-
-  vdiffr::expect_doppelganger("SB depth=3 path=10", plot_replayer)
+  vdiffr::expect_doppelganger("SB depth=3 path=101", function() stern_brocot_plot(path="101"))
 })
+
+test_that("vdiffr: Stern-Brocot depth=7 path=1100110", {
+  vdiffr::expect_doppelganger("SB depth=7 path=1100110", function() stern_brocot_plot(path = "1100110"))
+})
+

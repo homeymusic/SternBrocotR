@@ -41,34 +41,30 @@ inline int as_integer_cpp(const std::vector<int>& bits) {
 DataFrame stern_brocot_cpp(const double x,
                         const double valid_min, const double valid_max) {
 
-  double approximation;
+  if (x <= 0 || valid_min <= 0 || valid_max <= 0) {
+    stop("STOP: all inputs must be greater than 0");
+  }
+
   int cycles = 0;
   std::vector<int> path = {1};
 
-  int left_num = floor(x), left_den = 1;
-  int mediant_num = round(x), mediant_den = 1;
-  int right_num = floor(x) + 1, right_den = 1;
+  int left_num    = 0, left_den    = 1;
+  int mediant_num = 1, mediant_den = 1;
+  int right_num   = 1, right_den   = 0;
 
-  approximation = (double) mediant_num / mediant_den;
   const int insane = 1000000;
 
-  while ((approximation < valid_min) || (valid_max < approximation)) {
-    double x0 = 2 * x - approximation;
+  double approximation = 1.0;
 
+  while ((approximation < valid_min) || (valid_max < approximation)) {
     if (approximation < valid_min) {
       left_num = mediant_num;
       left_den = mediant_den;
-      int k = floor(round_to_precision(right_num - x0 * right_den) / (x0 * left_den - left_num));
-      right_num += k * left_num;
-      right_den += k * left_den;
-      path.push_back(0);
+      path.push_back(1);
     } else {
       right_num = mediant_num;
       right_den = mediant_den;
-      int k = floor(round_to_precision(x0 * left_den - left_num) / (right_num - x0 * right_den));
-      left_num += k * right_num;
-      left_den += k * right_den;
-      path.push_back(1);
+      path.push_back(0);
     }
 
     mediant_num = left_num + right_num;
@@ -76,6 +72,7 @@ DataFrame stern_brocot_cpp(const double x,
     approximation = (double) mediant_num / mediant_den;
 
     cycles++;
+
     if (cycles > insane) {
       Rcpp::Rcout << "Cycle: " << cycles
                   << ", Approximation: " << approximation

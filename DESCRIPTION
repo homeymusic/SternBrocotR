@@ -13,7 +13,8 @@ Description: Provides tools for approximating real numbers as rational fractions
     using the Stern-Brocot tree. Includes functions for precise approximations 
     with configurable uncertainty bounds and metadata about the approximation process.
 Imports: 
-    Rcpp (>= 1.0.14)
+    Rcpp (>= 1.0.14),
+    igraph
 LinkingTo: 
     Rcpp
 Suggests: 

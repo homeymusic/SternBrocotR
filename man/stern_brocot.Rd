@@ -2,18 +2,18 @@
 % Please edit documentation in R/stern_brocot.R
 \name{stern_brocot}
 \alias{stern_brocot}
-\title{Approximate a real number as a fraction using the Stern-Brocot tree}
+\title{Approximate a real number as a coprime rational fraction using the Stern-Brocot tree}
 \usage{
 stern_brocot(x, uncertainty)
 }
 \arguments{
-\item{x}{A single numeric value to approximate as a fraction. Must be a finite value.}
+\item{x}{A single numeric value to approximate as a fraction.}
 
 \item{uncertainty}{Either:
 \itemize{
-\item A single positive numeric value representing symmetrical uncertainty bounds (i.e., ±uncertainty), or
+\item A single positive numeric value representing symmetrical uncertainty bounds \verb{x - uncertainty, x + uncertainty}, or
 \item A vector of two positive numeric values, where the first element is the lower uncertainty and the second
-is the upper uncertainty, defining the range \verb{[x - lower, x + upper]}.
+is the upper uncertainty, defining the range \verb{x - uncertainty[1], x + uncertainty[2]}.
 }}
 }
 \value{
@@ -26,29 +26,31 @@ A data frame with the following columns:
 \item \code{error}: The difference between the approximation and the original value of \code{x}.
 \item \code{valid_min}: The lower bound of the uncertainty range.
 \item \code{valid_max}: The upper bound of the uncertainty range.
-\item \code{depth}: The depth of the Stern-Brocot tree traversal (number of steps taken).
+\item \code{depth}: The depth of the Stern-Brocot tree traversal.
 \item \code{path}: The path taken in the Stern-Brocot tree as a binary string.
 \item \code{path_id}: The binary path represented as an integer.
 }
 }
 \description{
-This function approximates a real number as a rational fraction (numerator and denominator)
-using the Stern-Brocot tree. It supports specifying a tolerance (uncertainty) to determine
+This function approximates a real number as a coprime rational fraction
+using the Stern-Brocot tree. It supports specifying an uncertainty to determine
 how close the approximation should be to the real number.
 }
 \details{
 The method is inspired by the algorithms described in:
-\itemize{
-\item Forišek, M. (2007). Approximating rational numbers by fractions. In International
-Conference on Fun with Algorithms (pp. 156-165). Springer Berlin Heidelberg.
-\item Stolzenburg, F. (2015). Harmony perception by periodicity detection. Journal of
-Mathematics and Music, 9(3), 215-238.
+\enumerate{
+\item Stern, M. (1858). Ueber eine zahlentheoretische Funktion. \emph{Journal für die reine und angewandte Mathematik, 55}, 193–220.
+\item Brocot, A. (1862). Calcul des rouages par approximation: Nouvelle méthode. \emph{A. Brocot.}
+\item Graham, R. L., Knuth, D. E., & Patashnik, O. (1994). \emph{Concrete mathematics} (2nd ed., pp. 115–123). Addison-Wesley.
+\item Forišek, M. (2007). Approximating rational numbers by fractions. In \emph{International Conference on Fun with Algorithms} (pp. 156–165). Berlin, Heidelberg: Springer Berlin Heidelberg.
+\item Stolzenburg, F. (2015). Harmony perception by periodicity detection. \emph{Journal of Mathematics and Music, 9}(3), 215–238.
 }
 }
 \examples{
 # Approximation with symmetrical uncertainty
-stern_brocot(0.49, uncertainty = 0.03)  # Returns approximately 1/2
+stern_brocot(sqrt(2), uncertainty = 0.03)
 
 # Approximation with asymmetrical uncertainty
-stern_brocot(0.49, uncertainty = c(0.04, 0.02))  # Returns approximately 1/2
+stern_brocot(sqrt(12), uncertainty = c(0.01, 0.02))
+
 }

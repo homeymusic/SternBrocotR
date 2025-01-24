@@ -1,21 +1,22 @@
-#' Approximate a real number as a fraction using the Stern-Brocot tree
+#' Approximate a real number as a coprime rational fraction using the Stern-Brocot tree
 #'
-#' This function approximates a real number as a rational fraction (numerator and denominator)
-#' using the Stern-Brocot tree. It supports specifying a tolerance (uncertainty) to determine
+#' This function approximates a real number as a coprime rational fraction
+#' using the Stern-Brocot tree. It supports specifying an uncertainty to determine
 #' how close the approximation should be to the real number.
 #'
 #' The method is inspired by the algorithms described in:
 #'
-#' - Forišek, M. (2007). Approximating rational numbers by fractions. In International
-#'   Conference on Fun with Algorithms (pp. 156-165). Springer Berlin Heidelberg.
-#' - Stolzenburg, F. (2015). Harmony perception by periodicity detection. Journal of
-#'   Mathematics and Music, 9(3), 215-238.
+#' 1. Stern, M. (1858). Ueber eine zahlentheoretische Funktion. *Journal für die reine und angewandte Mathematik, 55*, 193–220.
+#' 2. Brocot, A. (1862). Calcul des rouages par approximation: Nouvelle méthode. *A. Brocot.*
+#' 3. Graham, R. L., Knuth, D. E., & Patashnik, O. (1994). *Concrete mathematics* (2nd ed., pp. 115–123). Addison-Wesley.
+#' 4. Forišek, M. (2007). Approximating rational numbers by fractions. In *International Conference on Fun with Algorithms* (pp. 156–165). Berlin, Heidelberg: Springer Berlin Heidelberg.
+#' 5. Stolzenburg, F. (2015). Harmony perception by periodicity detection. *Journal of Mathematics and Music, 9*(3), 215–238.
 #'
-#' @param x A single numeric value to approximate as a fraction. Must be a finite value.
+#' @param x A single numeric value to approximate as a fraction.
 #' @param uncertainty Either:
-#'   - A single positive numeric value representing symmetrical uncertainty bounds (i.e., ±uncertainty), or
+#'   - A single positive numeric value representing symmetrical uncertainty bounds `x - uncertainty, x + uncertainty`, or
 #'   - A vector of two positive numeric values, where the first element is the lower uncertainty and the second
-#'     is the upper uncertainty, defining the range `[x - lower, x + upper]`.
+#'     is the upper uncertainty, defining the range `x - uncertainty[1], x + uncertainty[2]`.
 #'
 #' @return A data frame with the following columns:
 #'   - `x`: The original value of `x`.
@@ -25,16 +26,18 @@
 #'   - `error`: The difference between the approximation and the original value of `x`.
 #'   - `valid_min`: The lower bound of the uncertainty range.
 #'   - `valid_max`: The upper bound of the uncertainty range.
-#'   - `depth`: The depth of the Stern-Brocot tree traversal (number of steps taken).
+#'   - `depth`: The depth of the Stern-Brocot tree traversal.
 #'   - `path`: The path taken in the Stern-Brocot tree as a binary string.
 #'   - `path_id`: The binary path represented as an integer.
 #'
 #' @examples
 #' # Approximation with symmetrical uncertainty
-#' stern_brocot(0.49, uncertainty = 0.03)  # Returns approximately 1/2
+#' stern_brocot(sqrt(2), uncertainty = 0.03)
 #'
 #' # Approximation with asymmetrical uncertainty
-#' stern_brocot(0.49, uncertainty = c(0.04, 0.02))  # Returns approximately 1/2
+#' stern_brocot(sqrt(12), uncertainty = c(0.01, 0.02))
+#'
+#' @export
 stern_brocot <- function(x, uncertainty) {
   # Check that `x` is numeric and length 1
   if (!is.numeric(x) || length(x) != 1) {

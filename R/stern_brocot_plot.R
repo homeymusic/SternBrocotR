@@ -113,48 +113,6 @@ stern_brocot_graph <- function(depth) {
   )
 }
 
-graph_layout <- function(graph, node_map, intro_level, depth) {
-  fraction_value <- function(fs) {
-    parts <- strsplit(fs, "/")[[1]]
-    num   <- as.numeric(parts[1])
-    den   <- as.numeric(parts[2])
-    if (den == 0) Inf else (num/den)
-  }
-
-  vertices_df <- igraph::as_data_frame(graph, "vertices")
-  is_final    <- (vertices_df$level == depth)
-  final_df    <- vertices_df[is_final,]
-  if (nrow(final_df)==0) final_df <- vertices_df
-
-  final_df$val <- sapply(final_df$fraction_str, fraction_value)
-  final_df <- final_df[order(final_df$val),]
-  final_vals <- final_df$val
-  k <- length(final_vals)
-
-  pos_in_final <- function(v) {
-    p <- sum(final_vals < v) + 1
-    if(p<1) p<-1
-    if(p>k) p<-k
-    p
-  }
-
-  x_coords <- numeric(nrow(vertices_df))
-  y_coords <- numeric(nrow(vertices_df))
-  for (i in seq_len(nrow(vertices_df))) {
-    fs  <- vertices_df$fraction_str[i]
-    val <- fraction_value(fs)
-    lvl <- vertices_df$level[i]
-    x_coords[i] <- pos_in_final(val)
-    y_coords[i] <- -lvl
-  }
-
-  # reorder for igraph internal order
-  ig_order <- as.integer(igraph::V(graph)$name)
-  match_idx<- match(ig_order, vertices_df$name)
-
-  cbind(x_coords[match_idx], y_coords[match_idx])
-}
-
 graph_path <- function(graph, layout_mat, path, parents_map, node_map, intro_level) {
   # Build traveled vectors
   node_traveled <- rep(FALSE, igraph::vcount(graph))
@@ -293,4 +251,47 @@ stern_brocot_tree <- function(depth, path) {
     traveled_nodes = path_res$traveled_nodes,
     traveled_edges = path_res$traveled_edges
   )
+}
+
+graph_layout <- function(graph, node_map, intro_level, depth) {
+  # 1) Gather all fractions in the graph + compute numeric values
+  vertices_df <- igraph::as_data_frame(graph, what = "vertices")
+
+  fraction_value <- function(frac_str) {
+    parts <- strsplit(frac_str, "/")[[1]]
+    num   <- as.numeric(parts[1])
+    den   <- as.numeric(parts[2])
+    if (den == 0) Inf else (num / den)
+  }
+
+  all_vals <- sapply(vertices_df$fraction_str, fraction_value)
+
+  # 2) Sort them globally => each fraction gets a unique rank 1..n
+  #    If "1/0" is present, it becomes the largest rank.
+  ord     <- order(all_vals)  # ascending
+  # Build a map from fraction_str => rank
+  #   e.g. rank_map["0/1"] = 1, rank_map["1/2"] = 2, etc.
+  rank_map <- setNames(seq_along(ord), vertices_df$fraction_str[ord])
+
+  # 3) Assign (x, y) to each fraction:
+  #    x = the rank among *all* fractions in numeric order
+  #    y = negative of the fraction's introduction level
+  n <- nrow(vertices_df)
+  x_coords <- numeric(n)
+  y_coords <- numeric(n)
+
+  for (i in seq_len(n)) {
+    fs   <- vertices_df$fraction_str[i]
+    lvl  <- vertices_df$level[i]
+    x_coords[i] <- as.numeric(rank_map[fs])
+    y_coords[i] <- -lvl
+  }
+
+  # 4) Re‐order rows to match igraph’s internal vertex order
+  ig_order     <- igraph::V(graph)$name          # typically "1","2",...
+  ig_order_num <- as.integer(ig_order)
+  match_idx    <- match(ig_order_num, vertices_df$name)
+
+  layout_mat <- cbind(x_coords[match_idx], y_coords[match_idx])
+  layout_mat
 }

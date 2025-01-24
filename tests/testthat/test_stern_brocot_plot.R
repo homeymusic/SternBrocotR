@@ -145,7 +145,7 @@ test_that("vdiffr: Stern–Brocot depth=3 path=10", {
   skip_if_not_installed("vdiffr")
 
   # This path should highlight 1/1 and presumably 1/2 or 2/1.
-  sb <- stern_brocot_tree(depth=3, path="10")
+  sb <- stern_brocot_tree(depth=3, path="101")
 
   draw_plot <- function() {
     plot(

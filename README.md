@@ -25,7 +25,7 @@ Following Graham et al. [3], we use the $\perp$ sign to indicate $p$ and $q$ are
 
 $$p \perp q \iff \gcd(p, q) = 1, \quad p \in \mathbb{Z}, \quad q \in \mathbb{N}^+$$
 
-The Stern-Brocot tree restricts the range of possible value from the reals to 
+The Stern-Brocot tree restricts the range of possible values from the reals to 
 the coprime rational fractions.
 
 $$\mathbb{R} \to \mathbb{Q_\perp}$$

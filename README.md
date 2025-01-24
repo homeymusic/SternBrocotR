@@ -17,9 +17,9 @@ fraction bounded by lower and upper uncertainty parameters.
 stern_brocot(sqrt(2), c(0.02, 0.01)) # returns 7 / 5
 ```
 
-$$x = \operatorname{SB}(\sqrt{2} | 0.02, 0.01) = \frac{7}{5}$$
+$$x = \text{SB}(\sqrt{2} | 0.02, 0.01) = \frac{7}{5}$$
 
-$$x = \operatorname{SB}(\tilde{x} | \sigma^\lt_x, \sigma^\gt_x) = \frac{p}{q}$$
+$$x = \text{SB}(\tilde{x} | \sigma^\lt_x, \sigma^\gt_x) = \frac{p}{q}$$
 
 Following Graham et al. [3], we use the $\perp$ sign to indicate $p$ and $q$ are coprime.
 
@@ -45,7 +45,7 @@ of the Stern-Brocot tree traversal and path representation.
 
 Check out the [Stern-Brocot tree](https://en.wikipedia.org/wiki/Stern–Brocot_tree) Wikipedia article.
 
-Check out this delightful video from [Numberphile](https://www.youtube.com/@numberphile).
+Check out this delightful video from [Numberphile](https://www.youtube.com/watch?v=DpwUVExX27E).
 
 [![Infinite Fractions - Numberphile](https://img.youtube.com/vi/DpwUVExX27E/0.jpg)](https://www.youtube.com/watch?v=DpwUVExX27E)
 

@@ -24,7 +24,7 @@ $$x = \text{SB}(\tilde{x} | \sigma^\lt_x, \sigma^\gt_x) = \frac{p}{q}$$
 A common use case is the lower and upper uncertainties have the same value:
 
 ```r
-stern_brocot(sqrt(3), 0.1) # returns 5 / 3
+stern_brocot(sqrt(2), 0.02) # returns 7 / 5
 ```
 
 $$x = \text{SB}(\tilde{x} | \sigma_x) = \frac{p}{q}, \quad \sigma^\lt_x = \sigma^\gt_x$$
@@ -42,6 +42,15 @@ by a movement to the left to `3/2` which we encode with a `0` followed by a move
 to the right to `5/3` which we encode with another `1`. So the full encoding would be:
 
 ##### Path encoding for `5/3`: `1101`
+
+```r
+stern_brocot(sqrt(3), 0.1) # returns 5 / 3
+```
+
+| x        | num | den | approximation |   error    | valid_min | valid_max | depth | path | path_id |
+|----------|-----|-----|---------------|------------|-----------|-----------|-------|------|---------|
+| 1.732051 |  5  |  3  |    1.666667   | -0.06538414| 1.632051 | 1.832051 |   4   | 1101 |    13   |
+
 
 ![The path in the Stern-Brocot tree for the square root of 3 with uncertainty of 0.1.](man/figures/stern_brocot_1101.png)
 

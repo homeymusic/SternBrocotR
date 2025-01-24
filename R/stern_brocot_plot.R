@@ -200,7 +200,7 @@ graph_path <- function(graph, layout_mat, path, parents_map, node_map, intro_lev
         traveled_nodes_idx <- c(traveled_nodes_idx, child_vid)
 
         # find edge current_vid->child_vid
-        eid <- igraph::get.edge.ids(graph, vp = c(get(current_fs, envir=frac2vid), child_vid), directed=TRUE)
+        eid <- igraph::get_edge_ids(graph, vp = c(get(current_fs, envir=frac2vid), child_vid), directed=TRUE)
         if (eid != 0) {
           traveled_edges_idx <- c(traveled_edges_idx, eid)
         }

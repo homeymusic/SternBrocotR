@@ -21,6 +21,14 @@ $$x = \text{SB}(\sqrt{2} | 0.02, 0.01) = \frac{7}{5}$$
 
 $$x = \text{SB}(\tilde{x} | \sigma^\lt_x, \sigma^\gt_x) = \frac{p}{q}$$
 
+A common use case is when the lower and upper uncertainties have the same value:
+
+```r
+stern_brocot(sqrt(2), 0.01) # returns 17 / 12
+```
+
+$$x = \text{SB}(\tilde{x} | \sigma_x) = \frac{p}{q}, \quad \sigma^\lt_x = \sigma^\gt_x$$
+
 Following Graham et al. [3], we use the $\perp$ sign to indicate $p$ and $q$ are coprime.
 
 $$p \perp q \iff \gcd(p, q) = 1, \quad p \in \mathbb{Z}, \quad q \in \mathbb{N}^+$$

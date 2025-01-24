@@ -108,6 +108,38 @@ test_that("Vertex IDs match 1..vcount(g)", {
     expect_true(TRUE)
   }
 })
+
+test_that("Path='10' from depth=3 ends at 1/2", {
+  sb <- stern_brocot_tree(depth = 3, path = "10")
+
+  traveled_nodes <- which(igraph::V(sb$graph)$traveled)
+  traveled_fracs <- igraph::V(sb$graph)$fraction_str[ traveled_nodes ]
+
+  # Should contain 1/1 and 1/2
+  expect_true("1/1" %in% traveled_fracs)
+  expect_true("1/2" %in% traveled_fracs)
+
+  # Should not include 3/2, 1/3, etc.
+  expect_false("3/2" %in% traveled_fracs)
+  expect_false("1/3" %in% traveled_fracs)
+})
+
+test_that("Path='101' visits 1/2 -> 2/3 (not 3/2)", {
+  sb <- stern_brocot_tree(depth = 3, path = "101")
+
+  # Gather which fractions got traveled
+  traveled_nodes <- which(igraph::V(sb$graph)$traveled)
+  traveled_fracs <- igraph::V(sb$graph)$fraction_str[ traveled_nodes ]
+
+  # We want "1/1", "1/2", and "2/3"
+  expect_true("1/1" %in% traveled_fracs)
+  expect_true("1/2" %in% traveled_fracs)
+  expect_true("2/3" %in% traveled_fracs)
+
+  # We do NOT want "3/2"
+  expect_false("3/2" %in% traveled_fracs)
+})
+
 test_that("vdiffr: Stern–Brocot depth=3 (no path)", {
   skip_on_cran()
   skip_if_not_installed("vdiffr")
@@ -140,7 +172,7 @@ test_that("vdiffr: Stern–Brocot depth=3 (no path)", {
 
   vdiffr::expect_doppelganger("SB depth=3 no path", plot_replayer)
 })
-test_that("vdiffr: Stern–Brocot depth=3 path=10", {
+test_that("vdiffr: Stern–Brocot depth=3 path=101", {
   skip_on_cran()
   skip_if_not_installed("vdiffr")
 
@@ -155,7 +187,7 @@ test_that("vdiffr: Stern–Brocot depth=3 path=10", {
       vertex.label     = igraph::V(sb$graph)$fraction_str,
       vertex.color     = ifelse(igraph::V(sb$graph)$traveled, "red", "lightblue"),
       edge.color       = ifelse(igraph::E(sb$graph)$traveled, "red", "grey40"),
-      main             = "Stern-Brocot (depth=3, path='10')"
+      main             = "Stern-Brocot (depth=3, path='101')"
     )
   }
   plot_capture <- function() {

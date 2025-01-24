@@ -31,7 +31,7 @@ $$x = \text{SB}(\tilde{x} | \sigma_x) = \frac{p}{q}, \quad \sigma^\lt_x = \sigma
 
 Following Graham et al. [3], we use the $\perp$ sign to indicate $p$ and $q$ are coprime.
 
-$$p \perp q \iff \gcd(p, q) = 1, \quad p \in \mathbb{Z}, \quad q \in \mathbb{N}^+$$
+$$p \perp q \iff \gcd(p, q) = 1, \quad p, q \in \mathbb{N}^+$$
 
 The Stern-Brocot tree restricts the range of possible values from the reals to 
 the coprime rational fractions.

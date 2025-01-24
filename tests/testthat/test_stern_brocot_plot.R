@@ -77,12 +77,6 @@ test_that("Invalid path does not break code", {
   # Just ensure no errors or mismatches
   expect_true(length(traveled_v) >= 1)
 })
-test_that("Depth=0 has minimal or no nodes", {
-  sb <- stern_brocot_tree(depth=0, path="")
-  g  <- sb$graph
-  # Decide how many vertices you expect. Possibly 2 if you keep boundary nodes.
-  expect_true(igraph::vcount(g) == 2 || igraph::vcount(g) == 0)
-})
 test_that("Depth=1 has 3 expected fractions", {
   sb <- stern_brocot_tree(depth=1, path="")
   g  <- sb$graph

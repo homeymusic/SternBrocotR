@@ -8,7 +8,7 @@ as coprime rational fractions using the Stern-Brocot tree.
 This package is ideal for applications requiring rational fraction approximations 
 with configurable uncertainty bounds.
 
-## The Stern-Brocot operator
+## The Stern-Brocot function
 
 The Stern-Brocot function maps a real value to the nearest coprime rational 
 fraction bounded by lower and upper uncertainty parameters.

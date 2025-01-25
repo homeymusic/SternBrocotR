@@ -213,9 +213,10 @@ Contributions are welcome! If you find a bug or have an idea for a new feature, 
 
 ## Acknowledgments
 
-Special thanks to Stolzenburg [5] for conversations on his use of the Stern-Brocot 
-tree to the psychophysics of music and to the R and C++ communities for creating 
-tools like **Rcpp**, which make packages like this possible.
+Special thanks to Prof. Dr. Frieder Stolzenburg for conversations about his 
+application of the Stern-Brocot tree to the psychophysics of music [5] and to 
+the R and C++ communities for creating tools like **Rcpp**, which make packages 
+like this possible.
 
 ---
 

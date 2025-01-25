@@ -52,7 +52,6 @@ DataFrame stern_brocot_cpp(const double x,
     stop("STOP: x must be less than valid_max");
   }
 
-  int cycles = 0;
   std::vector<int> path = {1};
 
   int left_num    = 0, left_den    = 1;
@@ -75,8 +74,6 @@ DataFrame stern_brocot_cpp(const double x,
     mediant_num = left_num + right_num;
     mediant_den = left_den + right_den;
     approximation = (double) mediant_num / mediant_den;
-
-    cycles++;
 
   }
 

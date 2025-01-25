@@ -65,10 +65,8 @@ value of `path_id: 13`.
 stern_brocot(sqrt(3), 0.1) # returns 5 / 3
 ```
 
-#### Full function call results
-
-Each `stern_brocot()` result includes metadata about the approximation process, such as the depth 
-of the Stern-Brocot tree traversal and path representation.
+Each `stern_brocot()` result includes metadata about the approximation process, 
+such as the depth of the Stern-Brocot tree traversal and the path representation.
 
 | x        | num | den | approximation |   error    | valid_min | valid_max | depth | path | path_id |
 |----------|-----|-----|---------------|------------|-----------|-----------|-------|------|---------|

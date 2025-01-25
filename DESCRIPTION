@@ -1,7 +1,7 @@
 Package: SternBrocot
 Type: Package
 Title: Approximation of Real Numbers as Rational Fractions Using the Stern-Brocot Tree
-Version: 0.0.1
+Version: 0.1.0
 Date: 2025-01-22
 Authors@R: person(
     "Brian",

@@ -49,7 +49,7 @@ $$\mathbb{R} \to \mathbb{Q_\perp}$$
 
 ---
 
-## The Stern-Brocot tree with path
+## The Stern-Brocot tree path
 
 Each path in the Stern-Brocot tree leads to a unique coprime fraction. 
 We can encode the path as a binary set of choices. We start with `1` for the

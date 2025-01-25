@@ -1,13 +1,13 @@
 # CITATION file for the SternBrocotR package
 
-citHeader("To cite the SternBrocotR package in publications, use:")
+citHeader("To cite the SternBrocot package in publications, use:")
 
 citation <- bibentry(
   bibtype = "Manual",
-  title = "SternBrocotR: Approximation of Real Numbers as Rational Fractions Using the Stern-Brocot Tree",
+  title = "SternBrocot",
   author = person("Brian McAuliff", "Mulloy"),
   year = "2025",
-  note = "R package version 1.0.0",
+  note = "R package version 0.0.1",
   url = "https://github.com/homeymusic/SternBrocotR"
 )
 

@@ -8,9 +8,9 @@ as coprime rational fractions using the Stern-Brocot tree.
 This package is ideal for applications requiring rational fraction approximations 
 with configurable uncertainty bounds.
 
-### The Stern-Brocot operator
+## The Stern-Brocot operator
 
-The Stern-Brocot operator maps a real value to the nearest coprime rational 
+The Stern-Brocot function maps a real value to the nearest coprime rational 
 fraction bounded by lower and upper uncertainty parameters.
 
 ```r
@@ -21,40 +21,16 @@ $$x = \text{SB}(\sqrt{2} | 0.02, 0.01) = \frac{7}{5}$$
 
 $$x = \text{SB}(\tilde{x} | \sigma^\lt_x, \sigma^\gt_x) = \frac{p}{q}$$
 
-A common use case is the lower and upper uncertainties have the same value:
+$$\sigma^\lt_x, \tilde{x}, \tilde{x} - \sigma^\lt_x, \sigma^\gt_x > 0$$
+
+For simple approximations it is common for the lower and upper uncertainties to 
+have the same value:
 
 ```r
 stern_brocot(sqrt(2), 0.02) # returns 7 / 5
 ```
 
-$$x = \text{SB}(\tilde{x} | \sigma_x) = \frac{p}{q}, \quad \sigma^\lt_x = \sigma^\gt_x$$
-
----
-
-#### Stern-Brocot tree with path 
-
-Every unique path in the tree Stern-Brocot leads to a unique coprime fraction. 
-We can encode the path as a binary set of choices where we start with `1` for the
-`1/1` vertex followed by `0` for movement to the left and `1` for movement to the
-right. In the figure below, the encoding would be to start with `1/1` as `1` 
-followed by a right movement to `2/1` which would encode with another `1` followed 
-by a movement to the left to `3/2` which we encode with a `0` followed by a movement
-to the right to `5/3` which we encode with another `1`. So the full encoding would be:
-
-##### Path encoding for `5/3`: `1101`
-
-```r
-stern_brocot(sqrt(3), 0.1) # returns 5 / 3
-```
-
-| x        | num | den | approximation |   error    | valid_min | valid_max | depth | path | path_id |
-|----------|-----|-----|---------------|------------|-----------|-----------|-------|------|---------|
-| 1.732051 |  5  |  3  |    1.666667   | -0.06538414| 1.632051 | 1.832051 |   4   | 1101 |    13   |
-
-
-![The path in the Stern-Brocot tree for the square root of 3 with uncertainty of 0.1.](man/figures/stern_brocot_1101.png)
-
----
+$$x = \text{SB}(\tilde{x} | \sigma_x) = \frac{p}{q}, \quad \sigma_x = \sigma^\lt_x = \sigma^\gt_x$$
 
 Following Graham et al. [3], we use the $\perp$ sign to indicate $p$ and $q$ are coprime.
 
@@ -73,16 +49,37 @@ $$\mathbb{R} \to \mathbb{Q_\perp}$$
 
 ---
 
-### Metadata
+## The Stern-Brocot tree with path
+
+Every unique path in the tree Stern-Brocot leads to a unique coprime fraction. 
+We can encode the path as a binary set of choices where we start with `1` for the
+`1/1` vertex followed by `0` for movement to the left and `1` for movement to the
+right. In the figure below, the encoding would be to start with `1/1` as `1` 
+followed by a right movement to `2/1` which would encode with another `1` followed 
+by a movement to the left to `3/2` which we encode with a `0` followed by a movement
+to the right to `5/3` which we encode with another `1`. So the full encoding would be:
+
+Path encoding for `5/3`: `1101`
+
+```r
+stern_brocot(sqrt(3), 0.1) # returns 5 / 3
+```
+
+#### Metadata
 
 Each result includes metadata about the approximation process, such as the depth 
 of the Stern-Brocot tree traversal and path representation.
 
-|        x | num | den | approximation |       error | valid_min | valid_max | depth | path | path_id |
-|----------|-----|-----|---------------|-------------|-----------|-----------|-------|------|---------|
-| 1.414214 |   7 |   5 |           1.4 | -0.01421356 |  1.394214 |  1.424214 |     4 | 1010 |      10 |
+| x        | num | den | approximation |   error    | valid_min | valid_max | depth | path | path_id |
+|----------|-----|-----|---------------|------------|-----------|-----------|-------|------|---------|
+| 1.732051 |  5  |  3  |    1.666667   | -0.06538414| 1.632051 | 1.832051 |   4   | 1101 |    13   |
 
-### Learn more about the Stern-Brocot tree
+
+![The path in the Stern-Brocot tree for the square root of 3 with uncertainty of 0.1.](man/figures/stern_brocot_1101.png)
+
+---
+
+## Learn more about the Stern-Brocot tree
 
 Check out the [Stern-Brocot tree](https://en.wikipedia.org/wiki/Stern–Brocot_tree) Wikipedia article.
 
@@ -186,7 +183,7 @@ print(result)
 
 If you use this package in your research or publications, please cite it as follows:
 
-> **Brian McAuliff Mulloy** (2025). *SternBrocot: Approximation of Real Numbers as Rational Fractions Using the Stern-Brocot Tree.* R package version 1.0.0. URL: [https://github.com/homeymusic/SternBrocotR](https://github.com/homeymusic/SternBrocotR)
+> **Brian McAuliff Mulloy** (2025). *SternBrocot.* R package version 0.0.1. URL: [https://github.com/homeymusic/SternBrocotR](https://github.com/homeymusic/SternBrocotR)
 
 You can also generate a citation in R:
 

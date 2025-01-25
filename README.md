@@ -1,5 +1,8 @@
 # SternBrocot
 
+
+# TODO: document the plot capability
+
 ## Introduction
 
 The **SternBrocot** R package provides a function for approximating real numbers 

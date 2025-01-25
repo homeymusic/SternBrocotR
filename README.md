@@ -181,7 +181,7 @@ print(result)
 
 If you use this package in your research or publications, please cite it as follows:
 
-> **Brian McAuliff Mulloy** (2025). *SternBrocot.* R package version 0.0.1. URL: [https://github.com/homeymusic/SternBrocotR](https://github.com/homeymusic/SternBrocotR)
+> **Brian McAuliff Mulloy** (2025). *SternBrocot.* R package version 0.1.1. URL: [https://github.com/homeymusic/SternBrocotR](https://github.com/homeymusic/SternBrocotR)
 
 You can also generate a citation in R:
 

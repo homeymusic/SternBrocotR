@@ -7,7 +7,7 @@ citation <- bibentry(
   title = "SternBrocot",
   author = person("Brian McAuliff", "Mulloy"),
   year = "2025",
-  note = "R package version 0.0.1",
+  note = "R package version 0.1.1",
   url = "https://github.com/homeymusic/SternBrocotR"
 )
 

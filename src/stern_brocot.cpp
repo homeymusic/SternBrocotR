@@ -39,7 +39,8 @@ inline int as_integer_cpp(const std::vector<int>& bits) {
  //' @export
  // [[Rcpp::export]]
 DataFrame stern_brocot_cpp(const double x,
-                        const double valid_min, const double valid_max) {
+                           const double valid_min,
+                           const double valid_max) {
 
   if (valid_min <= 0) {
     stop("STOP: valid_min must be greater than 0");
@@ -57,8 +58,6 @@ DataFrame stern_brocot_cpp(const double x,
   int left_num    = 0, left_den    = 1;
   int mediant_num = 1, mediant_den = 1;
   int right_num   = 1, right_den   = 0;
-
-  const int insane = 1000000;
 
   double approximation = 1.0;
 
@@ -79,20 +78,9 @@ DataFrame stern_brocot_cpp(const double x,
 
     cycles++;
 
-    if (cycles > insane) {
-      Rcpp::Rcout << "Cycle: " << cycles
-                  << ", Approximation: " << approximation
-                  << ", Bounds: [" << left_num << "/" << left_den << ", "
-                  << right_num << "/" << right_den << "]\n";
-      stop("STOP: too many cycles: " + std::to_string(cycles));
-    }
   }
 
   if (mediant_den <= 0) stop("STOP: mediant_den is less than or equal to zero");
-
-  if (cycles != path.size() - 1) {
-    stop("STOP: cycles value does not match the depth. cycles: " + std::to_string(cycles) + ", path size: " + std::to_string(path.size()));
-  }
 
   return DataFrame::create(
     _["x"] = x,

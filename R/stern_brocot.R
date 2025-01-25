@@ -44,11 +44,6 @@ stern_brocot <- function(x, uncertainty) {
     stop("`x` must be a single numeric value.")
   }
 
-  # Validate `uncertainty`
-  if (!is.numeric(uncertainty)) {
-    stop("`uncertainty` must be numeric")
-  }
-
   # Handle symmetrical uncertainty
   if (length(uncertainty) == 1) {
     lower_uncertainty <- uncertainty

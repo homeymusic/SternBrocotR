@@ -59,6 +59,35 @@ test_that("close to 0.5 returns 1/2 with asymmetrical uncertainty", {
   expect_equal(result$num, 1)
   expect_equal(result$den, 2)
 })
+test_that("error with uncertainties out of bounds", {
+  real = 0.49
+  lower_uncertainty = -0.04
+  upper_uncertainty = 0.02
+  expect_error(stern_brocot(
+    x = real,
+    uncertainty = c(lower_uncertainty, upper_uncertainty)
+  ))
+})
+test_that("x <=  valid_min", {
+  expect_error(stern_brocot_cpp(
+    x = 0.01,
+    valid_min = 0.1,
+    valid_max = 0.2
+  ))
+})
+test_that("valid_max <=", {
+  expect_error(stern_brocot_cpp(
+    x = 0.3,
+    valid_min = 0.1,
+    valid_max = 0.2
+  ))
+})
+test_that("error with nonnumeric x", {
+  expect_error(stern_brocot(
+    x = 'foo',
+    uncertainty = 0.1
+  ))
+})
 test_that("3 unceratinties throws an error", {
   real = 0.49
   lower_uncertainty = 0.04

@@ -51,23 +51,23 @@ $$\mathbb{R} \to \mathbb{Q_\perp}$$
 
 ## The Stern-Brocot tree with path
 
-Every unique path in the tree Stern-Brocot leads to a unique coprime fraction. 
-We can encode the path as a binary set of choices where we start with `1` for the
-`1/1` vertex followed by `0` for movement to the left and `1` for movement to the
-right. In the figure below, the encoding would be to start with `1/1` as `1` 
-followed by a right movement to `2/1` which would encode with another `1` followed 
-by a movement to the left to `3/2` which we encode with a `0` followed by a movement
-to the right to `5/3` which we encode with another `1`. So the full encoding would be:
-
-Path encoding for `5/3`: `1101`
+Each path in the Stern-Brocot tree leads to a unique coprime fraction. 
+We can encode the path as a binary set of choices. We start with `1` for the
+`1/1` vertex followed by `0`s for movement to the left and `1`s for movement to the
+right. In the figure below, we start with `1/1` as `1` 
+followed by a right movement to `2/1` which we encode with `1` followed 
+by a movement to the left to `3/2` which we encode as `0` followed by a movement
+to the right to `5/3` which we encode with `1`. So the full encoding would 
+be: `path: 1101`. If we interpret that path string as a binary number we get the decimal 
+value of `path_id: 13`.
 
 ```r
 stern_brocot(sqrt(3), 0.1) # returns 5 / 3
 ```
 
-#### Metadata
+#### Full function call results
 
-Each result includes metadata about the approximation process, such as the depth 
+Each `stern_brocot()` result includes metadata about the approximation process, such as the depth 
 of the Stern-Brocot tree traversal and path representation.
 
 | x        | num | den | approximation |   error    | valid_min | valid_max | depth | path | path_id |
@@ -75,7 +75,7 @@ of the Stern-Brocot tree traversal and path representation.
 | 1.732051 |  5  |  3  |    1.666667   | -0.06538414| 1.632051 | 1.832051 |   4   | 1101 |    13   |
 
 
-![The path in the Stern-Brocot tree for the square root of 3 with uncertainty of 0.1.](man/figures/stern_brocot_1101.png)
+![The path in the Stern-Brocot tree for the square root of 3 with symmetrical uncertainty of 0.1.](man/figures/stern_brocot_1101.png)
 
 ---
 
@@ -223,6 +223,7 @@ tools like **Rcpp**, which make packages like this possible.
 
 ## References
 The method is inspired by the algorithms described in:
+
 1. Stern, M. (1858). Ueber eine zahlentheoretische Funktion. *Journal für die reine und angewandte Mathematik, 55*, 193–220.
 2. Brocot, A. (1862). Calcul des rouages par approximation: Nouvelle méthode. *A. Brocot.*
 3. Graham, R. L., Knuth, D. E., & Patashnik, O. (1994). *Concrete Mathematics* (2nd ed., pp. 115–123). Addison-Wesley.

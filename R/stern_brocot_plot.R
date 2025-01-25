@@ -1,12 +1,15 @@
-stern_brocot_plot <- function(path) {
-  internal_stern_brocot_plot(stern_brocot_tree(depth=nchar(path), path))
+#' @keywords internal
+.stern_brocot_plot <- function(path) {
+  .internal_stern_brocot_plot(.stern_brocot_tree(depth=nchar(path), path))
 }
 
-stern_brocot_no_path_plot <- function(depth) {
-  internal_stern_brocot_plot(stern_brocot_tree(depth=depth, path=""))
+#' @keywords internal
+.stern_brocot_no_path_plot <- function(depth) {
+  .internal_stern_brocot_plot(.stern_brocot_tree(depth=depth, path=""))
 }
 
-internal_stern_brocot_plot <- function(sb) {
+#' @keywords internal
+.internal_stern_brocot_plot <- function(sb) {
   # Ensure sb contains the necessary components
   if (is.null(sb$depth) || is.null(sb$layout) || is.null(sb$graph)) {
     stop("The 'sb' object must contain 'depth', 'layout', and 'graph'.")
@@ -26,7 +29,8 @@ internal_stern_brocot_plot <- function(sb) {
   )
 }
 
-stern_brocot_graph <- function(depth) {
+#' @keywords internal
+.stern_brocot_graph <- function(depth) {
   node_map     <- new.env(parent = emptyenv())  # fraction_str -> temp ID
   intro_level  <- new.env(parent = emptyenv())  # temp ID -> level
   parents_map  <- new.env(parent = emptyenv())  # fraction_str -> c(left_str, right_str)
@@ -141,7 +145,8 @@ stern_brocot_graph <- function(depth) {
   )
 }
 
-graph_path <- function(graph, layout_mat, path, parents_map, node_map, intro_level) {
+#' @keywords internal
+.graph_path <- function(graph, layout_mat, path, parents_map, node_map, intro_level) {
   # Build traveled vectors
   node_traveled <- rep(FALSE, igraph::vcount(graph))
   edge_traveled <- rep(FALSE, igraph::ecount(graph))
@@ -259,12 +264,13 @@ graph_path <- function(graph, layout_mat, path, parents_map, node_map, intro_lev
   )
 }
 
-stern_brocot_tree <- function(depth, path) {
-  res <- stern_brocot_graph(depth)
+#' @keywords internal
+.stern_brocot_tree <- function(depth, path) {
+  res <- .stern_brocot_graph(depth)
   g   <- res$graph
-  lay <- graph_layout(g, res$node_map, res$intro_level, depth=depth)
+  lay <- .graph_layout(g, res$node_map, res$intro_level, depth=depth)
 
-  path_res <- graph_path(
+  path_res <- .graph_path(
     graph       = g,
     layout_mat  = lay,
     path        = path,
@@ -283,7 +289,8 @@ stern_brocot_tree <- function(depth, path) {
   )
 }
 
-graph_layout <- function(graph, node_map, intro_level, depth) {
+#' @keywords internal
+.graph_layout <- function(graph, node_map, intro_level, depth) {
   # 1) Gather all fractions in the graph + compute numeric values
   vertices_df <- igraph::as_data_frame(graph, what = "vertices")
 
@@ -301,7 +308,7 @@ graph_layout <- function(graph, node_map, intro_level, depth) {
   ord     <- order(all_vals)  # ascending
   # Build a map from fraction_str => rank
   #   e.g. rank_map["0/1"] = 1, rank_map["1/2"] = 2, etc.
-  rank_map <- setNames(seq_along(ord), vertices_df$fraction_str[ord])
+  rank_map <- stats::setNames(seq_along(ord), vertices_df$fraction_str[ord])
 
   # 3) Assign (x, y) to each fraction:
   #    x = the rank among *all* fractions in numeric order

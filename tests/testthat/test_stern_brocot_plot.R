@@ -1,12 +1,12 @@
 test_that("No duplicate fractions", {
-  res <- stern_brocot_graph(4)
+  res <- .stern_brocot_graph(4)
   g   <- res$graph
 
   fraction_strs <- igraph::V(g)$fraction_str
   expect_equal(length(unique(fraction_strs)), igraph::vcount(g))
 })
 test_that("Check level ranges", {
-  res <- stern_brocot_graph(4)
+  res <- .stern_brocot_graph(4)
   g   <- res$graph
 
   lvls <- igraph::V(g)$level
@@ -20,14 +20,14 @@ test_that("Check level ranges", {
   expect_equal(lvls[idx_1_1], 1)
 })
 test_that("Edge count is sane", {
-  res <- stern_brocot_graph(4)
+  res <- .stern_brocot_graph(4)
   g   <- res$graph
   ec  <- igraph::ecount(g)
   # e.g. expect 16 edges, or at least that ec < some threshold
   expect_equal(ec, 16)  # or use some known count
 })
 test_that("1/1 is connected from 0/1 and 1/0", {
-  res <- stern_brocot_graph(4)
+  res <- .stern_brocot_graph(4)
   g   <- res$graph
 
   # find IDs in igraph
@@ -44,9 +44,9 @@ test_that("1/1 is connected from 0/1 and 1/0", {
   expect_true(e2 != 0)
 })
 test_that("Layout matrix matches vcount", {
-  res <- stern_brocot_graph(4)
+  res <- .stern_brocot_graph(4)
   g   <- res$graph
-  lay <- graph_layout(g, res$node_map, res$intro_level, depth=4)
+  lay <- .graph_layout(g, res$node_map, res$intro_level, depth=4)
 
   expect_equal(nrow(lay), igraph::vcount(g))
   expect_equal(ncol(lay), 2)
@@ -56,7 +56,7 @@ test_that("Layout matrix matches vcount", {
   expect_true(all(xs >= 1))  # or whatever range you expect
 })
 test_that("Path traveling actually marks traveled nodes/edges", {
-  sb <- stern_brocot_tree(depth=3, path="10")
+  sb <- .stern_brocot_tree(depth=3, path="10")
   # or some path you know is valid at depth=3
 
   g   <- sb$graph
@@ -69,7 +69,7 @@ test_that("Path traveling actually marks traveled nodes/edges", {
   expect_gt(length(traveled_e), 0)
 })
 test_that("Invalid path does not break code", {
-  sb <- stern_brocot_tree(depth=2, path="111111111")  # obviously too long
+  sb <- .stern_brocot_tree(depth=2, path="111111111")  # obviously too long
   g  <- sb$graph
 
   # We might expect only 1 or 2 nodes traveled, or zero edges
@@ -78,13 +78,13 @@ test_that("Invalid path does not break code", {
   expect_true(length(traveled_v) >= 1)
 })
 test_that("Depth=1 has 3 expected fractions", {
-  sb <- stern_brocot_tree(depth=1, path="")
+  sb <- .stern_brocot_tree(depth=1, path="")
   g  <- sb$graph
   frac_strs <- igraph::V(g)$fraction_str
   expect_setequal(frac_strs, c("0/1","1/1","1/0"))
 })
 test_that("Vertex IDs match 1..vcount(g)", {
-  sb <- stern_brocot_graph(4)
+  sb <- .stern_brocot_graph(4)
   g  <- sb$graph
   n  <- igraph::vcount(g)
 
@@ -104,7 +104,7 @@ test_that("Vertex IDs match 1..vcount(g)", {
 })
 
 test_that("Path='10' from depth=3 ends at 1/2", {
-  sb <- stern_brocot_tree(depth = 3, path = "10")
+  sb <- .stern_brocot_tree(depth = 3, path = "10")
 
   traveled_nodes <- which(igraph::V(sb$graph)$traveled)
   traveled_fracs <- igraph::V(sb$graph)$fraction_str[ traveled_nodes ]
@@ -119,7 +119,7 @@ test_that("Path='10' from depth=3 ends at 1/2", {
 })
 
 test_that("Path='101' visits 1/2 -> 2/3 (not 3/2)", {
-  sb <- stern_brocot_tree(depth = 3, path = "101")
+  sb <- .stern_brocot_tree(depth = 3, path = "101")
 
   # Gather which fractions got traveled
   traveled_nodes <- which(igraph::V(sb$graph)$traveled)
@@ -135,13 +135,13 @@ test_that("Path='101' visits 1/2 -> 2/3 (not 3/2)", {
 })
 
 test_that("vdiffr: Stern–Brocot depth=3 (no path)", {
-  vdiffr::expect_doppelganger("SB depth=3 no path", function() stern_brocot_no_path_plot(depth=3))
+  vdiffr::expect_doppelganger("SB depth=3 no path", function() .stern_brocot_no_path_plot(depth=3))
 })
 test_that("vdiffr: Stern–Brocot depth=3 path=101", {
-  vdiffr::expect_doppelganger("SB depth=3 path=101", function() stern_brocot_plot(path="101"))
+  vdiffr::expect_doppelganger("SB depth=3 path=101", function() .stern_brocot_plot(path="101"))
 })
 
 test_that("vdiffr: Stern-Brocot depth=7 path=1100110", {
-  vdiffr::expect_doppelganger("SB depth=7 path=1100110", function() stern_brocot_plot(path = "1100110"))
+  vdiffr::expect_doppelganger("SB depth=7 path=1100110", function() .stern_brocot_plot(path = "1100110"))
 })
 

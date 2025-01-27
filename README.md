@@ -201,7 +201,7 @@ citation("SternBrocot")
 
 ## License
 
-This package is licensed under the MIT License. See the [LICENSE](./LICENSE.md) file for more details.
+This package is licensed under the MIT License. See the [LICENSE](https://github.com/homeymusic/SternBrocotR/blob/main/LICENSE.md) file for more details.
 
 ---
 

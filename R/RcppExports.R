@@ -10,12 +10,12 @@
 #' - Stolzenburg F. Harmony perception by periodicity detection. Journal of Mathematics and Music. 2015 Sep 2;9(3):215-38.
 #'
 #' @param x Vector of numbers to convert to rational fractions.
-#' @param valid_min Lower bounds (scalar or vector).
-#' @param valid_max Upper bounds (scalar or vector).
+#' @param lower_uncertainty Lower uncertainty bounds (scalar or vector).
+#' @param upper_uncertainty Upper uncertainty bounds (scalar or vector).
 #'
 #' @return A data frame with results and metadata about the tree path.
 #' @export
-stern_brocot_cpp <- function(x, valid_min, valid_max) {
-    .Call(`_SternBrocot_stern_brocot_cpp`, x, valid_min, valid_max)
+stern_brocot_cpp <- function(x, lower_uncertainty, upper_uncertainty) {
+    .Call(`_SternBrocot_stern_brocot_cpp`, x, lower_uncertainty, upper_uncertainty)
 }
 

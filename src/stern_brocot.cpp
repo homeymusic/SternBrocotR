@@ -1,5 +1,4 @@
 #include <Rcpp.h>
-
 using namespace Rcpp;
 
 inline double round_to_precision(double value, int precision = 15) {
@@ -32,42 +31,42 @@ inline int as_integer_cpp(const std::vector<int>& bits) {
 //' - Stolzenburg F. Harmony perception by periodicity detection. Journal of Mathematics and Music. 2015 Sep 2;9(3):215-38.
 //'
 //' @param x Vector of numbers to convert to rational fractions.
-//' @param valid_min Lower bounds (scalar or vector).
-//' @param valid_max Upper bounds (scalar or vector).
+//' @param lower_uncertainty Lower uncertainty bounds (scalar or vector).
+//' @param upper_uncertainty Upper uncertainty bounds (scalar or vector).
 //'
 //' @return A data frame with results and metadata about the tree path.
 //' @export
 // [[Rcpp::export]]
 DataFrame stern_brocot_cpp(const NumericVector x,
-                           const NumericVector valid_min,
-                           const NumericVector valid_max) {
+                           const NumericVector lower_uncertainty,
+                           const NumericVector upper_uncertainty) {
 
   // Check vector lengths
   int n = x.size();
-
-
-  if (valid_min.size() != valid_max.size()) {
-    stop("valid_min and valid_max must be the same length");
+  if (lower_uncertainty.size() != 1 && lower_uncertainty.size() != n) {
+    stop("lower_uncertainty must either be of length 1 or match the length of x");
+  }
+  if (upper_uncertainty.size() != 1 && upper_uncertainty.size() != n) {
+    stop("upper_uncertainty must either be of length 1 or match the length of x");
   }
 
-  if ((valid_min.size() != 1 && valid_min.size() != n) ||
-      (valid_max.size() != 1 && valid_max.size() != n)) {
-    stop("valid_min and valid_max must either be of length 1 or match the length of x");
-  }
+  // Expand scalar uncertainties to match the length of x
+  NumericVector lower = lower_uncertainty.size() == 1 ? NumericVector(n, lower_uncertainty[0]) : lower_uncertainty;
+  NumericVector upper = upper_uncertainty.size() == 1 ? NumericVector(n, upper_uncertainty[0]) : upper_uncertainty;
 
-  // Expand scalar bounds to match the length of x
-  NumericVector min_vec = valid_min.size() == 1 ? NumericVector(n, valid_min[0]) : valid_min;
-  NumericVector max_vec = valid_max.size() == 1 ? NumericVector(n, valid_max[0]) : valid_max;
+  // Compute valid_min and valid_max
+  NumericVector valid_min = x - lower;
+  NumericVector valid_max = x + upper;
 
-  // Check validity of bounds
+  // Check validity of computed bounds
   for (int i = 0; i < n; i++) {
-    if (min_vec[i] <= 0) {
+    if (valid_min[i] <= 0) {
       stop("STOP: valid_min must be greater than 0");
     }
-    if (x[i] <= min_vec[i]) {
+    if (x[i] <= valid_min[i]) {
       stop("STOP: x must be greater than valid_min");
     }
-    if (max_vec[i] <= x[i]) {
+    if (valid_max[i] <= x[i]) {
       stop("STOP: x must be less than valid_max");
     }
   }
@@ -86,8 +85,8 @@ DataFrame stern_brocot_cpp(const NumericVector x,
 
     double approximation = 1.0;
 
-    while ((approximation < min_vec[i]) || (approximation > max_vec[i])) {
-      if (approximation < min_vec[i]) {
+    while ((approximation < valid_min[i]) || (approximation > valid_max[i])) {
+      if (approximation < valid_min[i]) {
         left_num = mediant_num;
         left_den = mediant_den;
         path.push_back(1);
@@ -116,15 +115,17 @@ DataFrame stern_brocot_cpp(const NumericVector x,
 
   // Return results as a DataFrame
   return DataFrame::create(
-    _["x"] = x,
     _["num"] = nums,
     _["den"] = dens,
     _["approximation"] = approximations,
     _["error"] = errors,
-    _["valid_min"] = min_vec,
-    _["valid_max"] = max_vec,
     _["depth"] = depths,
     _["path"] = paths,
-    _["path_id"] = path_ids
+    _["path_id"] = path_ids,
+    _["x"] = x,
+    _["lower_uncertainty"] = lower,
+    _["upper_uncertainty"] = upper,
+    _["valid_min"] = valid_min,
+    _["valid_max"] = valid_max
   );
 }

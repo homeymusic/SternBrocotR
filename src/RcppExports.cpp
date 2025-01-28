@@ -11,15 +11,15 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // stern_brocot_cpp
-DataFrame stern_brocot_cpp(const NumericVector x, const NumericVector valid_min, const NumericVector valid_max);
-RcppExport SEXP _SternBrocot_stern_brocot_cpp(SEXP xSEXP, SEXP valid_minSEXP, SEXP valid_maxSEXP) {
+DataFrame stern_brocot_cpp(const NumericVector x, const NumericVector lower_uncertainty, const NumericVector upper_uncertainty);
+RcppExport SEXP _SternBrocot_stern_brocot_cpp(SEXP xSEXP, SEXP lower_uncertaintySEXP, SEXP upper_uncertaintySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type valid_min(valid_minSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type valid_max(valid_maxSEXP);
-    rcpp_result_gen = Rcpp::wrap(stern_brocot_cpp(x, valid_min, valid_max));
+    Rcpp::traits::input_parameter< const NumericVector >::type lower_uncertainty(lower_uncertaintySEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type upper_uncertainty(upper_uncertaintySEXP);
+    rcpp_result_gen = Rcpp::wrap(stern_brocot_cpp(x, lower_uncertainty, upper_uncertainty));
     return rcpp_result_gen;
 END_RCPP
 }

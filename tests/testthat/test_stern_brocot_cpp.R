@@ -13,6 +13,87 @@ expected_stern_brocot_cpp_columns <- c(
   "path_id"
 )
 
+
+# Test with scalar x and scalar bounds
+test_that("stern_brocot_cpp handles scalar inputs correctly", {
+  x <- 1.667
+  result <- stern_brocot_cpp(x, x - GABOR_UNCERTAINTY, x + GABOR_UNCERTAINTY)
+  expect_equal(result$num, 5)
+  expect_equal(result$den, 3)
+  expect_equal(result$depth, 4)
+  expect_equal(result$path, "1101")
+  expect_equal(result$path_id, 13)
+})
+
+# Test with vector x and scalar bounds
+test_that("stern_brocot_cpp handles vector x with scalar bounds", {
+  x <- c(1.667, sqrt(2))
+  result <- stern_brocot_cpp(x, x - GABOR_UNCERTAINTY, x + GABOR_UNCERTAINTY)
+  expect_equal(result$num, c(5, 7))
+  expect_equal(result$den, c(3, 5))
+  expect_equal(result$depth, c(4, 5))
+  expect_equal(result$path, c("1101", "11001"))
+  expect_equal(result$path_id, c(13, 25))
+})
+
+# Test with vector x and vector bounds
+test_that("stern_brocot_cpp handles vector x with vector bounds", {
+  x <- c(1.667, sqrt(2))
+  valid_min <- c(1.6, 1.4)
+  valid_max <- c(1.8, 1.6)
+  result <- stern_brocot_cpp(x, valid_min, valid_max)
+  expect_equal(result$num, c(5, 3))
+  expect_equal(result$den, c(3, 2))
+  expect_equal(result$depth, c(4, 3))
+  expect_equal(result$path, c("1101", "110"))
+  expect_equal(result$path_id, c(13, 6))
+  expect_equal(result$valid_min, valid_min)
+  expect_equal(result$valid_max, valid_max)
+})
+
+# Test for mismatched vector lengths
+test_that("stern_brocot_cpp errors on mismatched valid min and max lengths", {
+  x <- c(1.667, sqrt(2))
+  valid_min <- c(1.6)  # Length 1
+  valid_max <- c(1.8, 1.6)  # Length 2
+  expect_error(
+    stern_brocot_cpp(x, valid_min, valid_max),
+    "valid_min and valid_max must be the same length"
+  )
+})
+
+# Test for mismatched vector lengths
+test_that("stern_brocot_cpp errors on mismatched lengths", {
+  x <- c(1.667, sqrt(2))
+  valid_min <- c(1.6, 1.5, 1.4)  # Length 3
+  valid_max <- c(1.8, 1.6, 1.9)  # Length 3
+  expect_error(
+    stern_brocot_cpp(x, valid_min, valid_max),
+    "valid_min and valid_max must either be of length 1 or match the length of x"
+  )
+})
+
+# Test for invalid bounds
+test_that("stern_brocot_cpp errors on invalid bounds", {
+  x <- c(1.667, sqrt(2))
+
+  # Invalid valid_min (negative value)
+  valid_min <- c(-1, 1.4)
+  valid_max <- c(1.8, 1.6)
+  expect_error(
+    stern_brocot_cpp(x, valid_min, valid_max),
+    "valid_min must be greater than 0"
+  )
+
+  # Invalid valid_max (less than x)
+  valid_min <- c(1.6, 1.4)
+  valid_max <- c(1.6, 1.2)
+  expect_error(
+    stern_brocot_cpp(x, valid_min, valid_max),
+    "STOP: x must be less than valid_max"
+  )
+})
+
 test_that("depth_cpp computes correct values", {
   x = 1.667
   result = stern_brocot_cpp(x, x - GABOR_UNCERTAINTY, x + GABOR_UNCERTAINTY)

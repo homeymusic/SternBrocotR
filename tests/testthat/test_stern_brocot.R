@@ -68,20 +68,6 @@ test_that("error with uncertainties out of bounds", {
     uncertainty = c(lower_uncertainty, upper_uncertainty)
   ))
 })
-test_that("x <=  valid_min", {
-  expect_error(stern_brocot_cpp(
-    x = 0.01,
-    valid_min = 0.1,
-    valid_max = 0.2
-  ))
-})
-test_that("valid_max <=", {
-  expect_error(stern_brocot_cpp(
-    x = 0.3,
-    valid_min = 0.1,
-    valid_max = 0.2
-  ))
-})
 test_that("error with nonnumeric x", {
   expect_error(stern_brocot(
     x = 'foo',

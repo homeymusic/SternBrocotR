@@ -13,10 +13,8 @@
 #' 5. Stolzenburg, F. (2015). Harmony perception by periodicity detection. *Journal of Mathematics and Music, 9*(3), 215–238.
 #'
 #' @param x A single numeric value to approximate as a fraction.
-#' @param uncertainty Either:
-#'   - A single positive numeric value representing symmetrical uncertainty bounds `x - uncertainty, x + uncertainty`, or
-#'   - A vector of two positive numeric values, where the first element is the lower uncertainty and the second
-#'     is the upper uncertainty, defining the range `x - uncertainty[1], x + uncertainty[2]`.
+#' @param lower_uncertainty The lower uncertainty
+#' @param upper_uncertainty The upper uncertainty
 #'
 #' @return A data frame with the following columns:
 #'   - `num`: The numerator of the approximated fraction (an integer).
@@ -40,27 +38,7 @@
 #' stern_brocot(sqrt(12), uncertainty = c(0.01, 0.02))
 #'
 #' @export
-stern_brocot <- function(x, uncertainty) {
-  # Check that `x` is numeric and length 1
-  if (!is.numeric(x) || length(x) != 1) {
-    stop("`x` must be a single numeric value.")
-  }
-
-  # Handle symmetrical uncertainty
-  if (length(uncertainty) == 1) {
-    lower_uncertainty <- uncertainty
-    upper_uncertainty <- uncertainty
-  } else if (length(uncertainty) == 2) {
-    lower_uncertainty <- uncertainty[1]
-    upper_uncertainty <- uncertainty[2]
-  } else {
-    stop("`uncertainty` must be a single value or a vector of two values (lower and upper bounds).")
-  }
-
-  # Ensure uncertainties are non-negative
-  if (lower_uncertainty < 0 || upper_uncertainty < 0) {
-    stop("Uncertainty values must be non-negative.")
-  }
+stern_brocot <- function(x, lower_uncertainty, upper_uncertainty) {
 
   stern_brocot_cpp(
     x,

@@ -19,16 +19,18 @@ is the upper uncertainty, defining the range \verb{x - uncertainty[1], x + uncer
 \value{
 A data frame with the following columns:
 \itemize{
-\item \code{x}: The original value of \code{x}.
 \item \code{num}: The numerator of the approximated fraction (an integer).
 \item \code{den}: The denominator of the approximated fraction (a natural number > 0).
 \item \code{approximation}: The value of the fraction \code{num / den}.
 \item \code{error}: The difference between the approximation and the original value of \code{x}.
-\item \code{valid_min}: The lower bound of the uncertainty range.
-\item \code{valid_max}: The upper bound of the uncertainty range.
 \item \code{depth}: The depth of the Stern-Brocot tree traversal.
 \item \code{path}: The path taken in the Stern-Brocot tree as a binary string.
 \item \code{path_id}: The binary path represented as an integer.
+\item \code{x}: The original value of \code{x}.
+\item \code{lower_uncertainty}: The lower uncertainty
+\item \code{upper_uncertainty}: The upper uncertainty range.
+\item \code{valid_min}: The lower bound of the uncertainty range.
+\item \code{valid_max}: The upper bound of the uncertainty range.
 }
 }
 \description{

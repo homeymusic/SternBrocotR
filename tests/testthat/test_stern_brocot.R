@@ -1,16 +1,18 @@
-GABOR_UNCERTAINTY = 1 / (4 * pi)
+GABOR_UNCERTAINTY <- 1 / (4 * pi)
 
 expected_stern_brocot_columns <- c(
-  "x",
   "num",
   "den",
   "approximation",
   "error",
-  "valid_min",
-  "valid_max",
   "depth",
   "path",
-  "path_id"
+  "path_id",
+  "x",
+  "lower_uncertainty",
+  "upper_uncertainty",
+  "valid_min",
+  "valid_max"
 )
 
 test_that("depth_cpp computes correct values", {

@@ -19,16 +19,18 @@
 #'     is the upper uncertainty, defining the range `x - uncertainty[1], x + uncertainty[2]`.
 #'
 #' @return A data frame with the following columns:
-#'   - `x`: The original value of `x`.
 #'   - `num`: The numerator of the approximated fraction (an integer).
 #'   - `den`: The denominator of the approximated fraction (a natural number > 0).
 #'   - `approximation`: The value of the fraction `num / den`.
 #'   - `error`: The difference between the approximation and the original value of `x`.
-#'   - `valid_min`: The lower bound of the uncertainty range.
-#'   - `valid_max`: The upper bound of the uncertainty range.
 #'   - `depth`: The depth of the Stern-Brocot tree traversal.
 #'   - `path`: The path taken in the Stern-Brocot tree as a binary string.
 #'   - `path_id`: The binary path represented as an integer.
+#'   - `x`: The original value of `x`.
+#'   - `lower_uncertainty`: The lower uncertainty
+#'   - `upper_uncertainty`: The upper uncertainty range.
+#'   - `valid_min`: The lower bound of the uncertainty range.
+#'   - `valid_max`: The upper bound of the uncertainty range.
 #'
 #' @examples
 #' # Approximation with symmetrical uncertainty
@@ -62,8 +64,8 @@ stern_brocot <- function(x, uncertainty) {
 
   stern_brocot_cpp(
     x,
-    valid_min = x - lower_uncertainty,
-    valid_max = x + upper_uncertainty
+    lower_uncertainty = lower_uncertainty,
+    upper_uncertainty = upper_uncertainty
   )
 
 }

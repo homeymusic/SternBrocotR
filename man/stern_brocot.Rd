@@ -7,22 +7,43 @@
 stern_brocot(x, lower_uncertainty, upper_uncertainty)
 }
 \arguments{
-\item{x}{Vector of numbers to convert to rational fractions.}
+\item{x}{A numeric vector of values to approximate as fractions.}
 
-\item{lower_uncertainty}{Lower uncertainty bounds (scalar or vector).}
+\item{lower_uncertainty}{A numeric vector (or scalar) specifying the lower uncertainty bound.}
 
-\item{upper_uncertainty}{Upper uncertainty bounds (scalar or vector).}
+\item{upper_uncertainty}{A numeric vector (or scalar) specifying the upper uncertainty bound.}
 }
 \value{
-A data frame with results and metadata about the tree path.
+A data frame with the following columns:
+\itemize{
+\item \code{num}: The numerator of the approximated fraction (an integer).
+\item \code{den}: The denominator of the approximated fraction (a natural number > 0).
+\item \code{approximation}: The value of the fraction \code{num / den}.
+\item \code{error}: The difference between the approximation and the original value of \code{x}.
+\item \code{depth}: The depth of the Stern-Brocot tree traversal.
+\item \code{path}: The path taken in the Stern-Brocot tree as a binary string.
+\item \code{path_id}: The binary path represented as an integer.
+\item \code{x}: The original value of \code{x}.
+\item \code{lower_uncertainty}: The lower uncertainty.
+\item \code{upper_uncertainty}: The upper uncertainty.
+\item \code{valid_min}: The lower bound of the uncertainty range (\code{x - lower_uncertainty}).
+\item \code{valid_max}: The upper bound of the uncertainty range (\code{x + upper_uncertainty}).
+}
 }
 \description{
-Approximates a floating-point number to arbitrary uncertainty (vectorized version).
+Approximate a real number as a coprime rational fraction using the Stern-Brocot tree
 }
 \details{
-This implementation is based on the Stern-Brocot tree algorithm as described in:
-\itemize{
-\item Forišek M. Approximating rational numbers by fractions. In International Conference on Fun with Algorithms 2007 Jun 3 (pp. 156-165). Berlin, Heidelberg: Springer Berlin Heidelberg.
-\item Stolzenburg F. Harmony perception by periodicity detection. Journal of Mathematics and Music. 2015 Sep 2;9(3):215-38.
+This function approximates a real number as a coprime rational fraction
+using the Stern-Brocot tree. It supports specifying an uncertainty to determine
+how close the approximation should be to the real number.
+
+The method is inspired by the algorithms described in:
+\enumerate{
+\item Stern, M. (1858). Ueber eine zahlentheoretische Funktion. \emph{Journal für die reine und angewandte Mathematik, 55}, 193–220.
+\item Brocot, A. (1862). Calcul des rouages par approximation: Nouvelle méthode. \emph{A. Brocot.}
+\item Graham, R. L., Knuth, D. E., & Patashnik, O. (1994). \emph{Concrete mathematics} (2nd ed., pp. 115–123). Addison-Wesley.
+\item Forišek, M. (2007). Approximating rational numbers by fractions. In \emph{International Conference on Fun with Algorithms} (pp. 156–165). Berlin, Heidelberg: Springer Berlin Heidelberg.
+\item Stolzenburg, F. (2015). Harmony perception by periodicity detection. \emph{Journal of Mathematics and Music, 9}(3), 215–238.
 }
 }

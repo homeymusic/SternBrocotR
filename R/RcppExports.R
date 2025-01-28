@@ -3,18 +3,38 @@
 
 #' stern_brocot
 #'
-#' Approximates a floating-point number to arbitrary uncertainty (vectorized version).
+#' Approximate a real number as a coprime rational fraction using the Stern-Brocot tree
 #'
-#' This implementation is based on the Stern-Brocot tree algorithm as described in:
-#' - Forišek M. Approximating rational numbers by fractions. In International Conference on Fun with Algorithms 2007 Jun 3 (pp. 156-165). Berlin, Heidelberg: Springer Berlin Heidelberg.
-#' - Stolzenburg F. Harmony perception by periodicity detection. Journal of Mathematics and Music. 2015 Sep 2;9(3):215-38.
+#' This function approximates a real number as a coprime rational fraction
+#' using the Stern-Brocot tree. It supports specifying an uncertainty to determine
+#' how close the approximation should be to the real number.
 #'
-#' @param x Vector of numbers to convert to rational fractions.
-#' @param lower_uncertainty Lower uncertainty bounds (scalar or vector).
-#' @param upper_uncertainty Upper uncertainty bounds (scalar or vector).
+#' The method is inspired by the algorithms described in:
 #'
-#' @return A data frame with results and metadata about the tree path.
-#' @export
+#' 1. Stern, M. (1858). Ueber eine zahlentheoretische Funktion. *Journal für die reine und angewandte Mathematik, 55*, 193–220.
+#' 2. Brocot, A. (1862). Calcul des rouages par approximation: Nouvelle méthode. *A. Brocot.*
+#' 3. Graham, R. L., Knuth, D. E., & Patashnik, O. (1994). *Concrete mathematics* (2nd ed., pp. 115–123). Addison-Wesley.
+#' 4. Forišek, M. (2007). Approximating rational numbers by fractions. In *International Conference on Fun with Algorithms* (pp. 156–165). Berlin, Heidelberg: Springer Berlin Heidelberg.
+#' 5. Stolzenburg, F. (2015). Harmony perception by periodicity detection. *Journal of Mathematics and Music, 9*(3), 215–238.
+#'
+#' @param x A numeric vector of values to approximate as fractions.
+#' @param lower_uncertainty A numeric vector (or scalar) specifying the lower uncertainty bound.
+#' @param upper_uncertainty A numeric vector (or scalar) specifying the upper uncertainty bound.
+#'
+#' @return A data frame with the following columns:
+#'   - `num`: The numerator of the approximated fraction (an integer).
+#'   - `den`: The denominator of the approximated fraction (a natural number > 0).
+#'   - `approximation`: The value of the fraction `num / den`.
+#'   - `error`: The difference between the approximation and the original value of `x`.
+#'   - `depth`: The depth of the Stern-Brocot tree traversal.
+#'   - `path`: The path taken in the Stern-Brocot tree as a binary string.
+#'   - `path_id`: The binary path represented as an integer.
+#'   - `x`: The original value of `x`.
+#'   - `lower_uncertainty`: The lower uncertainty.
+#'   - `upper_uncertainty`: The upper uncertainty.
+#'   - `valid_min`: The lower bound of the uncertainty range (`x - lower_uncertainty`).
+#'   - `valid_max`: The upper bound of the uncertainty range (`x + upper_uncertainty`).
+#'
 stern_brocot <- function(x, lower_uncertainty, upper_uncertainty) {
     .Call(`_SternBrocot_stern_brocot`, x, lower_uncertainty, upper_uncertainty)
 }

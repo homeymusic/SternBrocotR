@@ -1,4 +1,4 @@
-export(stern_brocot_cpp)
+export(stern_brocot)
 useDynLib(SternBrocot, .registration=TRUE)
 importFrom(Rcpp, evalCpp)
 exportPattern("^[[:alpha:]]+")

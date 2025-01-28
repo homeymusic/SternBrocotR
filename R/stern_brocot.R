@@ -38,12 +38,4 @@
 #' stern_brocot(sqrt(12), uncertainty = c(0.01, 0.02))
 #'
 #' @export
-stern_brocot <- function(x, lower_uncertainty, upper_uncertainty) {
-
-  stern_brocot_cpp(
-    x,
-    lower_uncertainty = lower_uncertainty,
-    upper_uncertainty = upper_uncertainty
-  )
-
-}
+NULL

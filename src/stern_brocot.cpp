@@ -22,7 +22,7 @@ inline int as_integer_cpp(const std::vector<int>& bits) {
   return result;
 }
 
-//' stern_brocot_cpp
+//' stern_brocot
 //'
 //' Approximates a floating-point number to arbitrary uncertainty (vectorized version).
 //'
@@ -37,7 +37,7 @@ inline int as_integer_cpp(const std::vector<int>& bits) {
 //' @return A data frame with results and metadata about the tree path.
 //' @export
 // [[Rcpp::export]]
-DataFrame stern_brocot_cpp(const NumericVector x,
+DataFrame stern_brocot(const NumericVector x,
                            const NumericVector lower_uncertainty,
                            const NumericVector upper_uncertainty) {
 

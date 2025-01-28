@@ -14,7 +14,7 @@ The Stern-Brocot function maps a real value to the nearest coprime rational
 fraction bounded by lower and upper uncertainty parameters.
 
 ```r
-stern_brocot(sqrt(2), c(0.02, 0.01)) # returns 7 / 5
+stern_brocot(sqrt(2), 0.02, 0.01) # returns 7 / 5
 ```
 
 $$x = \text{SB}(\sqrt{2} | 0.02, 0.01) = \frac{7}{5}$$
@@ -22,15 +22,6 @@ $$x = \text{SB}(\sqrt{2} | 0.02, 0.01) = \frac{7}{5}$$
 $$x = \text{SB}(\tilde{x} | \sigma^\lt_x, \sigma^\gt_x) = \frac{p}{q}$$
 
 $$\sigma^\lt_x, \tilde{x}, \tilde{x} - \sigma^\lt_x, \sigma^\gt_x > 0$$
-
-For simple approximations it is common for the lower and upper uncertainties to 
-have the same value:
-
-```r
-stern_brocot(sqrt(2), 0.02) # returns 7 / 5
-```
-
-$$x = \text{SB}(\tilde{x} | \sigma_x) = \frac{p}{q}, \quad \sigma_x = \sigma^\lt_x = \sigma^\gt_x$$
 
 Following Graham et al. [3], we use the $\perp$ sign to indicate $p$ and $q$ are coprime.
 
@@ -62,7 +53,7 @@ be: `path: 1101`. If we interpret that path string as a binary number we get the
 value of `path_id: 13`.
 
 ```r
-stern_brocot(sqrt(3), 0.1) # returns 5 / 3
+stern_brocot(sqrt(3), 0.1, 0.1) # returns 5 / 3
 ```
 
 Each `stern_brocot()` result includes metadata about the approximation process, 
